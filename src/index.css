@@ -15,4 +15,12 @@
   .backDrop {
     @apply backdrop-blur-lg bg-opacity-60
   }
+
+  .Hover {
+    @apply hover:scale-105 cursor-pointer duration-500
+  }
+
+  .footerHover {
+    @apply text-sm font-titleFont tracking-wide hover:text-gray-100 cursor-pointer hover:underline duration-300;
+  }
 }

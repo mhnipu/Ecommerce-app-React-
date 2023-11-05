@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import FooterTop from './FooterTop'
+import FooterMiddle from './FooterMiddle'
 
 const Footer = () => {
     return (
         <div className="font-titleFont">
             <FooterTop />
+            <FooterMiddle />
         </div>
     )
 }

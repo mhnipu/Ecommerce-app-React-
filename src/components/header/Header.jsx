@@ -1,6 +1,7 @@
+/* eslint-disable react/jsx-no-undef */
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import logo from '../../assets/logo.png'
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
@@ -9,6 +10,7 @@ import { allItems } from '../../constants';
 import { ShoppingCart } from '@mui/icons-material';
 import HeaderBottom from './HeaderBottom';
 const Header = () => {
+    const ref = useRef();
     const [showAll, setShowAll] = useState(false)
 
     return (
@@ -28,7 +30,7 @@ const Header = () => {
                 <div className='h-10 rounded-md flex flex-grow relative'>
                     <span onClick={() => setShowAll(!showAll)} className='w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-500 text-sm text-app_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md'>All <span></span> <ArrowDropDownOutlinedIcon /></span>
                     {showAll && (
-                        <div>
+                        <div >
                             <ul className='absolute w-56 h-80 top-10 left-0 overflow-y-scroll overflow-x-hidden bg-white border-[1px] border-app_blue text-black p-2 flex-col gap-1 z-50'>
 
                                 {

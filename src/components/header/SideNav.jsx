@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-import { CloseOutlined, KeyboardArrowRight } from '@mui/icons-material'
+import { KeyboardArrowRight } from '@mui/icons-material'
 import React from 'react'
 
 const SideNav = ({ title, one, two, three }) => {

@@ -2,8 +2,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useState, useRef, useEffect } from 'react'
-import { CloseFullscreen, CloseOutlined, MenuRounded } from '@mui/icons-material'
-import { Close } from '@mui/icons-material'
+import {  CloseOutlined, MenuRounded } from '@mui/icons-material'
 import { AccountCircleRounded } from '@mui/icons-material'
 import SideNav from './SideNav'
 import { motion } from 'framer-motion'
@@ -51,21 +50,18 @@ const HeaderBottom = () => {
                                             two='Mystery Novels'
                                             three='Science Fiction'
                                         />
-
                                         <SideNav
                                             title='Electronics & Gadgets'
                                             one='Smartphones'
                                             two='Wearable Tech'
                                             three='Home Appliances'
                                         />
-
                                         <SideNav
                                             title='Digital Contents & Devices'
                                             one='E-books'
                                             two='Streaming Music'
                                             three='Mobile Apps'
                                         />
-
                                     </h3>
                                 </div>
                                 <span onClick={() => setSideBar(false)} className='cursor-pointer absolute top-2 left-[310px] w-8 h-8 text-whiteText flex items-center rounded justify-center 

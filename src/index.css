@@ -9,7 +9,7 @@
   }
 
   .imgHover {
-    @apply px-2 h-[80%] flex items-center border border-transparent hover:scale-110 cursor-pointer duration-500
+    @apply px-2 h-[80%] flex items-center border border-transparent hover:scale-105 cursor-pointer duration-500
   }
 
   .backDrop {

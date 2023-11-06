@@ -1,5 +1,9 @@
+/* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
 import React from 'react'
+import FooterMiddleList from './FooterMiddleList'
+import { middleList } from '../../constants'
+import { bdFlag, logo } from '../../assets'
 
 const FooterMiddle = () => {
     return (
@@ -7,23 +11,30 @@ const FooterMiddle = () => {
             {/* top start here  */}
             <div className='w-full border-b-[1px] border-gray-500 py-10'>
                 <div className='max-w-5xl mx-auto text-gray-300'>
-                    <div>
-                        <div>
-                            <h3 className='font-titleFont text-white text-base font-semibold mb-3'>Get to Know Us</h3>
-                            <ul className='flex flex-col gap-2 font-bodyFont'>
-                                <li className='footerHover'>Careers</li>
-                                <li className='footerHover'>Careers</li>
-                                <li className='footerHover'>Careers</li>
-                                <li className='footerHover'>Careers</li>
-                                <li className='footerHover'>Careers</li>
-                            </ul>
-                        </div>
+                    <div className='w-full grid grid-cols-4 place-items-center items-start '>
+                        {
+                            middleList.map((item) => (
+                                <FooterMiddleList key={item._id} title={item.title} listItem={item.listItem} />
+                            ))
+                        }
                     </div>
-
                 </div>
             </div>
             {/* top end here */}
             {/* bottom start here  */}
+            <div className="w-full flex gap-6 items-center justify-center py-6 ">
+                <div>
+                    <img className='w-20 pt-3 Hover' src={logo} alt="" />
+                </div>
+                <div className='flex gap-2'>
+                    <p className='flex gap-1 items-center justify-center border rounded border-gray-500 hover:border-app_yellow cursor-pointer Hover px-2 py-1 '>English</p>
+                </div>
+                <div className="flex gap-1 items-center justify-center border rounded border-gray-500 hover:border-app_yellow cursor-pointer Hover px-2 py-1 ">
+                    <img className='w-6' src={bdFlag} alt="" />
+                    <p>Bangladesh</p>
+                </div>
+
+            </div>
             {/* bottom end here  */}
         </div>
     )

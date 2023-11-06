@@ -64,7 +64,8 @@ const Banner = () => {
                     background: "#232f3e",
                     padding: "8px 0",
                     cursor: "pointer",
-                    border: "1px solid",
+
+
                 }
                 }
             >

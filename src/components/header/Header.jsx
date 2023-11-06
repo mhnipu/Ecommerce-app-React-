@@ -14,7 +14,7 @@ const Header = () => {
     const [showAll, setShowAll] = useState(false)
 
     return (
-        <div className='w-full'>
+        <div className='w-full sticky top-0 z-50'>
             <div className="w-full bg-app_blue text-white px-4 py-3 flex items-center gap-4">
                 {/* logo */}
                 <div className="imgHover">

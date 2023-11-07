@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable no-unused-vars */
-import { CompareArrowsRounded, Star } from '@mui/icons-material'
+import { ArrowCircleRight, CompareArrowsRounded, Favorite, ShoppingCart, Star } from '@mui/icons-material'
 import axios from 'axios'
 import React, { useEffect } from 'react'
 import { useLoaderData } from 'react-router-dom'
@@ -27,9 +27,24 @@ const Products = () => {
                         <div className='w-full h-auto flex items-center justify-center px-4 relative'>
                             <img className="w-52 h-64 object-contain imgHover " src={item.image} alt="" />
                             <ul className='w-full h-36 absolute bottom-0 flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-1 border-r'>
-                                <li className="productLi Hover">
+                                <li className="productLi Hover top-0">
                                     <span >
                                         <Tooltip top title="Compare" placement="left">{""}<CompareArrowsRounded /></Tooltip>
+                                    </span>
+                                </li>
+                                <li className="productLi Hover top-9">
+                                    <span >
+                                        <Tooltip top title="Favorite" placement="left">{""}<Favorite /></Tooltip>
+                                    </span>
+                                </li>
+                                <li className="productLi Hover bottom-10">
+                                    <span >
+                                        <Tooltip top title="Product View" placement="left">{""}<ArrowCircleRight /></Tooltip>
+                                    </span>
+                                </li>
+                                <li className="productLi Hover bottom-1">
+                                    <span >
+                                        <Tooltip top title="Cart" placement="left">{""}<ShoppingCart /></Tooltip>
                                     </span>
                                 </li>
                             </ul>

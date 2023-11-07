@@ -67,7 +67,6 @@ const HeaderBottom = () => {
                                 <span onClick={() => setSideBar(false)} className='cursor-pointer absolute top-2 left-[310px] w-8 h-8 text-whiteText flex items-center rounded justify-center 
                                 bg-app_light hover:bg-app_yellow hover:text-white duration-500'><CloseOutlined /></span>
                             </motion.div>
-
                         </div>
                     </div>
                 )

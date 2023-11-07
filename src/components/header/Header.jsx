@@ -21,13 +21,13 @@ const Header = () => {
                     <img src={logo} alt="" className='w-24 mt-2' />
                 </div>
                 {/* delivery start */}
-                <div className="headerHover">
+                <div className="headerHover hidden mdl:inline-flex">
                     <LocationOnOutlinedIcon />
                     <p className='text-sm text-lightText font-light flex flex-col'>Delivery to <span className='text-sm font-semibold -mt-1 text-whiteText'>Oman</span></p>
                 </div>
                 {/* delivery end */}
                 {/* searchBar  */}
-                <div className='h-10 rounded-md flex flex-grow relative'>
+                <div className='h-10 rounded-md hidden lgl:flex flex-grow relative'>
                     <span onClick={() => setShowAll(!showAll)} className='w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-500 text-sm text-app_blue font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md'>All <span></span> <ArrowDropDownOutlinedIcon /></span>
                     {showAll && (
                         <div >
@@ -49,12 +49,12 @@ const Header = () => {
                 {/* search end */}
                 {/* Sign in start */}
                 <div className='flex flex-col items-start justify-center headerHover'>
-                    <p className='text-sm text-lightText font-light'>Hello , sign in</p>
-                    <p className='text-sm text-white font-semibold -mt-1'>Accounts & Lists {' '}<span><ArrowDropDownOutlinedIcon /></span></p>
+                    <p className='text-sm mdl:text-xs text-lightText font-light'>Hello , sign in</p>
+                    <p className='text-sm text-white font-semibold -mt-1 hidden mdl:inline-flex'>Accounts & Lists {' '}<span><ArrowDropDownOutlinedIcon /></span></p>
                 </div>
                 {/* Sign in end */}
                 {/* Order start */}
-                <div className='flex flex-col items-start justify-center headerHover'>
+                <div className='hidden lgl:flex flex-col items-start justify-center headerHover'>
                     <p className='text-sm text-lightText font-light'>Returns</p>
                     <p className='text-sm text-white font-semibold -mt-1'>& Orders</p>
                 </div>

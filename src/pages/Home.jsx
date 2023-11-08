@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import Banner from '../components/home/banner'
+import Banner from '../components/home/Banner'
 import Products from '../components/home/Products'
 
 const Home = () => {

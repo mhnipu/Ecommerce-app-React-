@@ -9,8 +9,9 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { allItems } from '../../constants';
 import { ShoppingCart } from '@mui/icons-material';
 import HeaderBottom from './HeaderBottom';
+import { useSelector } from 'react-redux';
 const Header = () => {
-    const ref = useRef();
+    const products = useSelector((state) => state.appReducer.products);
     const [showAll, setShowAll] = useState(false)
 
     return (
@@ -68,7 +69,11 @@ const Header = () => {
                 {/* Cart start */}
                 <div className='flex items-start justify-center headerHover relative'>
                     <ShoppingCart />
-                    <p className='text-xs font-semibold mt-3 text-whiteText'>Cart <span className='absolute text-xs -top-2 left-7 font-semibold p-1 h-4 bg-[#f3a847] text-app_blue rounded-full flex justify-center items-center '>0</span></p>
+                    <p className='text-xs font-semibold mt-3 text-whiteText'>Cart <span className='absolute text-xs -top-2 left-7 font-semibold p-1 h-4 bg-[#f3a847] text-app_blue rounded-full flex justify-center items-center '>
+                        {
+                            products.length > 0 ? products.length : 0
+                        }
+                    </span></p>
                 </div>
                 {/* cart end */}
             </div>

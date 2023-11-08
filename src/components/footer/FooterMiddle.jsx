@@ -22,7 +22,7 @@ const FooterMiddle = () => {
             </div>
             {/* top end here */}
             {/* bottom start here  */}
-            <div className="w-full flex gap-6 items-center justify-center py-6 ">
+            <div className="w-full flex bg-[#212c3b] gap-6 items-center justify-center py-6 ">
                 <div>
                     <img className='w-20 pt-3 Hover' src={logo} alt="" />
                 </div>

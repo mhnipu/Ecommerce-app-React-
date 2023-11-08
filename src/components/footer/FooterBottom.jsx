@@ -4,7 +4,7 @@ import { footerBottomItems } from '../../constants'
 
 const FooterBottom = () => {
     return (
-        <div className="w-full bg-footerBottom py-8">
+        <div className="w-full h-full bg-footerBottom py-8">
             <div className="max-w-5xl mx-auto px-5">
                 <div className="w-full grid grid-cols-3 md:grid-cols-5 mdl:grid-cols-6 lgl:grid-cols-8 gap-4 place-content-center text-gray-400 ">
                     {

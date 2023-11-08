@@ -50,7 +50,7 @@ const Products = () => {
                         <span className='text-xs capitalize italic absolute top-2 right-2 text-gray-400'>{item.category}</span>
                         <div className='w-full h-auto flex items-center justify-center px-4 relative group imgHover'>
                             <img className="w-52 h-64 object-contain  imgHover" src={item.image} alt="" />
-                            <ul className='w-full h-36 absolute bottom-[-170px] flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-1 border-r group-hover:bottom-0 duration-700'>
+                            <ul className='w-full h-36 absolute bottom-[-170px] flex flex-col items-end justify-center gap-2 font-titleFont px-4 border-1 border-r group-hover:bottom-0 duration-700'>
                                 <li className="productLi Hover top-0">
                                     <span >
                                         <Tooltip top title="Compare" placement="left">{""}<CompareArrowsRounded /></Tooltip>

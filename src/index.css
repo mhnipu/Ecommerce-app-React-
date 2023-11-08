@@ -28,5 +28,16 @@
     @apply text-black hover:bg-app_yellow text-sm font-semibold flex items-center justify-end gap-2 hover:cursor-pointer absolute text-xs font-semibold p-1 h-8 bg-gray-200 text-app_blue rounded-full
   }
 
+  /* styles.css or your stylesheet */
+  .fade-in {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .fade-out {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
 
 }

@@ -11,6 +11,7 @@ import {
 } from 'react-router-dom';
 import Home from './pages/Home';
 import { ProductsData } from './api/api';
+import Sign_in from './pages/Sign_in';
 
 const Layout = () => {
   return (
@@ -27,7 +28,8 @@ function App() {
 
     <Route path="/" element={<Layout />} >
       <Route index element={<Home />} loader={ProductsData}></Route>
-    </Route>
+      <Route path="/signIn" element={<Sign_in />}></Route>
+    </Route >
   ));
   return (
     <>

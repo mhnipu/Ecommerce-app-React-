@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div>
             <Banner />
-            <div className='w-full -mt-14 xl:-mt-40 backdrop-blur-lg bg-opacity-80 py-10'>
+            <div className='w-full -mt-5 xl:-mt-40 backdrop-blur-lg bg-opacity-80 py-10'>
                 <Products />
             </div>
 

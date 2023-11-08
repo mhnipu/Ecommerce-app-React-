@@ -88,6 +88,22 @@ export const middleList = [
             },
         ],
     },
+    {
+        _id: 2225,
+        title: 'Product Features',
+        listItem: [
+            {
+                _id: '04',
+                listData: [
+                    'Feature 1',
+                    'Feature 2',
+                    'Feature 3',
+                    'Feature 4',
+                    'Feature 5',
+                ],
+            },
+        ],
+    },
 ];
 
 export const footerBottomItems = [

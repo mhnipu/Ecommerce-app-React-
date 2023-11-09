@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
-import React from 'react'
+import React, { useState } from 'react'
 import Banner from '../components/home/Banner'
 import Products from '../components/home/Products'
+import { ShoppingCart } from '@mui/icons-material'
+import { Alert } from '@mui/material'
 
 const Home = () => {
     return (

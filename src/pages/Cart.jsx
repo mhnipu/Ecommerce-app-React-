@@ -12,15 +12,15 @@ const Cart = () => {
         <div className="w-full bg-gray-200 p-4">
             <div className=" mx-auto h-auto grid grid-cols-5 gap-6">
                 <div className="w-full h-full bg-white rounded-lg px-4 col-span-4 backDrop p-3">
-                    <div className="font-titleFont flex items-center justify-between border-b-[1px] border-b-gray-400 py-2 bg-gray-100 rounded-lg p-4 backDrop drop-shadow-lg" >
+                    <div className="font-titleFont flex items-center justify-between py-2 bg-gray-100 rounded-lg p-4 backDrop drop-shadow-lg" >
                         <h2 className="font-semibold text-2xl">Shopping Cart</h2>
                         <h4 className="text-lg text-gray-500">Subtitle</h4>
                     </div>
                     {/* Product starts here  */}
-                    <div className="pt-4   ">
+                    <div className="pt-4">
                         {
                             products.map((item) => (
-                                <div key={item.id} className="w-full bg-gray-100 p-4 flex rounded-lg items-center gap-6 border-b-[1px] border-b-gray-300">
+                                <div key={item.id} className="w-full bg-gray-100 p-4 flex rounded-lg items-center gap-6 border-b-[1px] border-b-gray-300 ">
                                     <div className="w-full flex items-center justify-between gap-6 ">
                                         <div className="w-2/5 bg-white rounded-lg py-5 drop-shadow-lg ">
                                             <img className='w-full h-44 object-contain imgHover' src={item.image} alt="" />
@@ -75,7 +75,7 @@ const Cart = () => {
                     </div>
                 </div>
                 <div className="w-full h-full rounded-lg bg-white col-span-1 backDrop">
-                    
+
 
                 </div>
             </div>

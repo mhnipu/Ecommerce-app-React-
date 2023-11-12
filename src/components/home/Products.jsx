@@ -52,7 +52,9 @@ const Products = () => {
                                     </li>
                                     <li className="productLi Hover bottom-1">
                                         <span >
-                                            <Tooltip top title="Cart" placement="left" arrow>{""}<ShoppingCart /></Tooltip>
+                                            <Tooltip top title="Cart" placement="left" arrow>
+                                                {""}<ShoppingCart />
+                                            </Tooltip>
                                         </span>
                                     </li>
                                 </ul>

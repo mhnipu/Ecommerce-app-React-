@@ -17,10 +17,10 @@ import { allItems } from '../../constants';
 import { ShoppingCart } from '@mui/icons-material';
 import HeaderBottom from './HeaderBottom';
 import { useSelector } from 'react-redux';
-import { Alert } from '@mui/material';
+import { Alert, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 const Header = () => {
-    const products = useSelector((state) => state.appReducer.products);
+    const products = useSelector((state) => state.app.products);
     const [showMessage, setShowMessage] = useState(false);
     const [message, setMessage] = useState('');
     const [showAll, setShowAll] = useState(false)
@@ -35,7 +35,7 @@ const Header = () => {
             setTimeout(() => {
                 setShowMessage(false);
                 setMessage('');
-            }, 2000);
+            }, 1000);
         }
     }, [products]);
 
@@ -111,11 +111,12 @@ const Header = () => {
                         </span></p>
                     </div>
                 </Link>
+
                 <div className="flex items-start justify-end headerHover relative">
                     {showMessage && (
                         <div className=''>
                             <Alert severity="success" color="warning">
-                                Product Added in <ShoppingCart />
+                                Product Updated in <ShoppingCart />
                             </Alert>
                         </div>
                     )}

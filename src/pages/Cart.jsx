@@ -114,9 +114,12 @@ const Cart = () => {
                         </div>
                     </div>
                 </div>) :
-                    (<motion.div initial={{ y: 70, opacity: 0 }}
+                    (<motion.div
+                        initial={{ y: 70, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.5, duration: 0.5 }} className="flex items-center justify-center gap-4 py-10">
+                        transition={{ delay: 0.5, duration: 0.5 }}
+                        className="flex items-center justify-center flex-col lg:flex-row gap-4 py-10"
+                    >
                         <div>
                             <img className='w-80 rounded-lg p-4 mx-auto' src={emptyCart} alt="" />
                         </div>
@@ -124,11 +127,18 @@ const Cart = () => {
                             <h1 className='font-titleFont text-xl font-bold'>
                                 Your Cart feels lonely.
                             </h1>
-                            <p className='text-sm text-center text-gray-600'>{""} Your Shopping cart lives to serve .Give it purpose - fill it with books, electronics ,videos, etc .and make it happy</p>
+                            <p className='text-sm text-center text-gray-600'>
+                                Your Shopping cart lives to serve. Give it purpose - fill it with books, electronics, videos, etc. and make it happy.
+                            </p>
                             <Link to={'/'}>
-                                <button className=' px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md mt-6 shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95 drop-shadow-lg'>Continue Shopping</button></Link>
+                                <button className='px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md mt-6 shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95 drop-shadow-lg'>
+                                    Continue Shopping
+                                </button>
+                            </Link>
                         </div>
-                    </motion.div>)
+                    </motion.div>
+
+                    )
             }
         </div >
     )

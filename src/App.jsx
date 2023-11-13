@@ -14,6 +14,8 @@ import Home from './pages/Home';
 import { ProductsData } from './api/api';
 import Sign_in from './pages/Sign_in';
 import Cart from './pages/Cart';
+import Registration from './pages/Registration';
+import CheckOut from './pages/CheckOut';
 
 const Layout = () => {
   return (
@@ -28,12 +30,17 @@ const Layout = () => {
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(
-
-    <Route path="/" element={<Layout />} >
-      <Route index element={<Home />} loader={ProductsData}></Route>
+    <Route>
+      <Route path="/" element={<Layout />} >
+        <Route index element={<Home />} loader={ProductsData}></Route>
+        <Route path="/cart" element={<Cart />}></Route>
+      </Route >
       <Route path="/signIn" element={<Sign_in />}></Route>
-      <Route path="/cart" element={<Cart />}></Route>
-    </Route >
+      <Route path="/registration" element={<Registration />}></Route>
+      <Route path="/checkout" element={<CheckOut />}></Route>
+    </Route>
+
+
   ));
   return (
     <>

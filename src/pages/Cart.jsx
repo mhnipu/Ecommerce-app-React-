@@ -8,7 +8,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { decrementQuantity, deleteItem, incrementQuantity, resetCart } from '../redux/appSlice';
 import { emptyCart } from '../assets/index'
-
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion'
 const Cart = () => {
 
     const dispatch = useDispatch()
@@ -96,7 +97,7 @@ const Cart = () => {
                         </div>
 
                     </div>
-                    <div className="w-full h-56 rounded-lg bg-white col-span-1 backDrop flex flex-col items-center justify-center p-4 sticky top-28 z-0">
+                    <div className="w-full h-72 rounded-lg bg-white col-span-1 backDrop flex flex-col items-center justify-center p-4 sticky top-28 z-0">
                         <div>
                             <p className='flex gap-2 items-start text-sm text-gray-600'>
                                 <span><CheckCircle className='bg-white text-green-500 rounded-full' /></span>
@@ -106,13 +107,28 @@ const Cart = () => {
                         <div>
                             <p className='font-semibold px-10 py-5 flex items-center justify-between gap-2'>Total : <span className="text-lg font-bold bg-[#f0f2f2] flex justify-center items-center gap-1 w-auto py-2 left-4 text-center p-6 drop-shadow-lg rounded-md">${totalPrice}</span></p>
                         </div>
-                        <button className="w-full h-10 font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md mt-3 shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95" >Proceed to Pay</button>
+                        <div>
+                            <button className="w-full  font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md mt-3 shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95 drop-shadow-lg" >Proceed to Pay</button>
+                            <Link to={'/'}>
+                                <button className='w-full px-8 font-titleFont font-medium text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md mt-6 shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95 drop-shadow-lg'>Continue Shopping</button></Link>
+                        </div>
                     </div>
-                </div>) : <div>
-                    <div>
-                        <img src={emptyCart} alt="" />
-                    </div>
-                </div>
+                </div>) :
+                    (<motion.div initial={{ y: 70, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.5, duration: 0.5 }} className="flex items-center justify-center gap-4 py-10">
+                        <div>
+                            <img className='w-80 rounded-lg p-4 mx-auto' src={emptyCart} alt="" />
+                        </div>
+                        <div className='flex flex-col items-center bg-white rounded-lg shadow-lg w-96 p-4'>
+                            <h1 className='font-titleFont text-xl font-bold'>
+                                Your Cart feels lonely.
+                            </h1>
+                            <p className='text-sm text-center text-gray-600'>{""} Your Shopping cart lives to serve .Give it purpose - fill it with books, electronics ,videos, etc .and make it happy</p>
+                            <Link to={'/'}>
+                                <button className=' px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md mt-6 shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95 drop-shadow-lg'>Continue Shopping</button></Link>
+                        </div>
+                    </motion.div>)
             }
         </div >
     )

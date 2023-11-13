@@ -6,9 +6,11 @@ import bannerImgFour from "./banner/bannerImgFour.jpg";
 import bannerImgFive from "./banner/bannerImgFive.jpg";
 import bdFlag from "./bdFlag.webp";
 import emptyCart from './emptyCart.png'
+import darkLogo from './darkLogo.png'
 
 export {
   logo,
+  darkLogo,
   bannerImgOne,
   bannerImgTwo,
   bannerImgThree,

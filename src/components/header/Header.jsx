@@ -89,10 +89,6 @@ const Header = () => {
                         <p className='text-sm text-white font-semibold -mt-1 hidden mdl:inline-flex'>Accounts & Lists {' '}<span><ArrowDropDownOutlinedIcon /></span></p>
                     </div>
                 </Link>
-                <div className='flex flex-col items-start justify-center headerHover'>
-                    <p className='text-sm mdl:text-xs text-lightText font-light'>Hello , sign in</p>
-                    <p className='text-sm text-white font-semibold -mt-1 hidden mdl:inline-flex'>Accounts & Lists {' '}<span><ArrowDropDownOutlinedIcon /></span></p>
-                </div>
                 {/* Sign in end */}
                 {/* Order start */}
                 <div className='hidden lgl:flex flex-col items-start justify-center headerHover'>

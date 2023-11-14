@@ -122,7 +122,6 @@ const Sign_in = () => {
                     </Link>
                 </form>
             </div>
-
             {/* Footer Section */}
             <div className='w-full bg-gradient-to-t from-white via-white to-zinc-200 flex flex-col gap-4 justify-center items-center py-10'>
                 <div className='flex items-center justify-center gap-8'>

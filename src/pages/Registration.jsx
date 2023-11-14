@@ -1,24 +1,92 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { ArrowRight, Info, Visibility, VisibilityOff } from '@mui/icons-material';
 import { darkLogo } from '../assets';
 import { Link } from 'react-router-dom';
 import { Tooltip, LinearProgress } from '@mui/material';
 
 const Registration = () => {
+
     const [contactMethod, setContactMethod] = useState('email');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [showErrorMessage, setShowErrorMessage] = useState(false);
     // State variables for password visibility
 
-    const [confirmPassword, setConfirmPassword] = useState(false);
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
-    const [password, setPassword] = useState('');
     const [isPasswordTyping, setIsPasswordTyping] = useState(false);
     const [passwordStrength, setPasswordStrength] = useState('');
     const [passwordMismatch, setPasswordMismatch] = useState(false);
+    // registration state variables
+    const [clientName, setClientName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    // error massages
+    const [ErrorclientName, setErrorClientName] = useState('');
+    const [Erroremail, setErrorEmail] = useState('');
+    const [ErrorPassword, setErrorPassword] = useState('');
+    const [ErrorConfirmPassword, setErrorConfirmPassword] = useState('');
+
+    // continue button state
+    const handleRegistration = (e) => {
+        e.preventDefault();
+        if (!clientName) {
+            setErrorClientName('Enter your name');
+        }
+        if (!email) {
+            setErrorEmail('Enter your Email or Phone Number');
+        }
+        if (!password) {
+            setErrorPassword('Enter your Password');
+        }
+        if (!confirmPassword) {
+            setErrorConfirmPassword('Please Re-Enter your Password');
+        }
+    }
+
+    const handleCombinedChange = (e) => {
+        handleInputChange(e);
+        handleEmail_Phone(e);
+    };
+
+    // 
+    // handle functions
+    const handleName = (e) => {
+        setClientName(e.target.value)
+        setErrorClientName("")
+    }
+
+    const handleEmail_Phone = (e) => {
+        setEmail(e.target.value)
+        setErrorEmail("")
+    }
+
+    // Function to handle password input change
+    const handlePasswordChange = (value, e) => {
+        setPassword(e.target.value);
+        const strength = calculatePasswordStrength(value);
+        setPasswordStrength(strength);
+        setPasswordMismatch(false);
+        setIsPasswordTyping(true);
+        setErrorPassword('');
+    };
+
+    // Confirm Password Input
+    const handleConfirmPasswordChange = (e) => {
+        const value = e.target.value;
+        setConfirmPassword(value);
+        if (value !== password) {
+            setPasswordMismatch(true);
+            setErrorConfirmPassword('Passwords do not match');
+        } else {
+            setPasswordMismatch(false);
+            setErrorConfirmPassword(''); // Clear error message when passwords match
+        }
+    };
+
+
     const getPasswordStrengthColor = () => {
         switch (passwordStrength) {
             case 'weak':
@@ -31,6 +99,7 @@ const Registration = () => {
                 return 'Password must be minimum 6 characters';
         }
     };
+
     const handleInputChange = (e) => {
         if (contactMethod === 'phone' && isNaN(e.target.value)) {
             // Show error message when non-numeric characters are entered for phone number
@@ -49,30 +118,19 @@ const Registration = () => {
             setShowPassword2(!showPassword2);
         }
     };
+
+
     // Function to calculate password strength
     const calculatePasswordStrength = (value) => {
         const strength = value.length >= 6 ? 'strong' : value.length >= 4 ? 'medium' : 'weak';
         return strength;
     };
-    // Function to handle password input change
-    const handlePasswordChange = (value) => {
-        setPassword(value);
-        const strength = calculatePasswordStrength(value);
-        setPasswordStrength(strength);
-        setPasswordMismatch(false);
-        setIsPasswordTyping(true);
-    };
-    // Function to handle confirm password input change
-    const handleConfirmPasswordChange = (value) => {
-        setConfirmPassword(value);
-        setPasswordMismatch(value !== password);
-        // Check if passwords match
-        if (value !== password) {
-            setPasswordMismatch(true);
-        } else {
-            setPasswordMismatch(false);
-        }
-    };
+
+
+
+
+
+
 
     return (
         <div className='w-full'>
@@ -91,7 +149,12 @@ const Registration = () => {
                             <div className='flex flex-col gap-2 py-1 pt-6'>
                                 {/* Name input */}
                                 <p className='font-semibold  text-gray-600'>Your name</p>
-                                <input className="w-full py-1 border border-zinc-300 shadow-inner rounded-md Hover px-2 text-base outline-none focus-within:border-app_yellow focus-within:shadow-appShadow duration-100" type="text" />
+                                <input onChange={handleName} className="w-full py-1 border border-zinc-300 shadow-inner rounded-md Hover px-2 text-base outline-none focus-within:border-app_yellow focus-within:shadow-appShadow duration-100" type="text-sm" placeholder='First and Last name' />
+                                {
+                                    ErrorclientName && (
+                                        <p className='text-red-500 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5'><span className='italic font-titleFont font-extrabold text-base'>!</span>{ErrorclientName}</p>
+                                    )
+                                }
                             </div>
 
                             {/* Email or phone number input */}
@@ -127,17 +190,19 @@ const Registration = () => {
                                     pattern={contactMethod === 'phone' ? '[0-9]*' : undefined}
                                     placeholder={contactMethod === 'email' ? 'Enter your email' : 'Enter your phone number'}
                                     value={phoneNumber}
-                                    onChange={handleInputChange}
+                                    onChange={handleCombinedChange}
                                 />
                                 {contactMethod === 'phone' && showErrorMessage && (
                                     <p className="text-red-500 text-xs">Please enter only numbers for the phone number.</p>
+                                )}
+                                {contactMethod === 'email' && Erroremail && (
+                                    <p className='text-red-500 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5'><span className='italic font-titleFont font-extrabold text-base'>!</span>{Erroremail}</p>
                                 )}
                             </div>
 
                             {/* Password input with visibility toggle */}
                             <div className='flex flex-col gap-2 pt-6 relative'>
                                 {/* Tooltip for password field */}
-
                                 <label className='text-gray-500'>
                                     <span className='font-semibold text-gray-600'>Password</span>
                                 </label>
@@ -155,10 +220,12 @@ const Registration = () => {
                                     >
                                         <input
                                             className={`w-full lowercase py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100  Hover cursor-pointer ${passwordStrength === 'weak' ? 'border-red-500' : passwordStrength === 'medium' ? 'border-yellow-500' : 'border-green-500'}`}
+                                            placeholder='At least 6 characters'
                                             type={showPassword1 ? 'text' : 'password'}
                                             value={password}
-                                            onChange={(e) => handlePasswordChange(e.target.value)}
+                                            onChange={(e) => handlePasswordChange(e.target.value, e)}
                                         />
+
                                         <input
                                             type="checkbox"
                                             className="absolute right-2 top-4 transform -translate-y-1/2 cursor-pointer opacity-0 w-6 h-6 text-gray-600"
@@ -173,9 +240,14 @@ const Registration = () => {
                                             {showPassword1 ? <Visibility /> : <VisibilityOff />}
                                         </label>
                                     </Tooltip>
-                                    <p className="text-xs text-gray-500 p-1">Password must be minimum 6 characters</p>
+                                    <p className="text-xs text-gray-500 p-1"><span className='italic text-blue-500 font-titleFont font-extrabold text-base'>i  </span> Password must be minimum 6 characters</p>
 
-                                    {/* Progress bar indicating password strength */}
+                                    {
+                                        ErrorPassword && (
+                                            <p className='text-red-500 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-.5'><span className='italic font-titleFont font-extrabold text-base'>!</span>{ErrorPassword}</p>
+                                        )
+                                    }
+
                                 </div>
                             </div>
 
@@ -187,25 +259,30 @@ const Registration = () => {
 
                                 <div className="relative">
                                     {/* Confirm password Input */}
-                                    <Tooltip title={passwordMismatch ? 'Passwords do not match' : ''} arrow placement="right">
-                                        <input
-                                            className={`w-full lowercase py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100 Hover cursor-pointer ${passwordMismatch ? 'border-red-500' : ''}`}
-                                            type={showPassword2 ? 'text' : 'password'}
-                                            value={confirmPassword}
-                                            onChange={(e) => handleConfirmPasswordChange(e.target.value)}
-                                        />
-                                    </Tooltip>
+
+                                    <input
+                                        className={`w-full lowercase py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100 Hover cursor-pointer ${passwordMismatch ? 'border-red-500' : ''}`}
+                                        type={showPassword2 ? 'text' : 'password'}
+                                        value={confirmPassword}
+                                        onChange={(e) => handleConfirmPasswordChange(e)}
+                                    />
+                                    {
+                                        ErrorConfirmPassword && (
+                                            <p className='text-red-500 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-.5'><span className='italic font-titleFont font-extrabold text-base'>!</span>{ErrorConfirmPassword}</p>
+                                        )
+                                    }
+
                                     {/* Toggle Confirm password Visibility */}
                                     <input
                                         type="checkbox"
-                                        className="absolute right-2 top-2/4 transform -translate-y-1/2 cursor-pointer opacity-0 w-6 h-6 text-gray-600"
+                                        className="absolute right-2 top-4 transform -translate-y-1/2 cursor-pointer opacity-0 w-6 h-6 text-gray-600"
                                         onChange={() => togglePasswordVisibility(2)}
                                         checked={showPassword2}
                                         id="togglePassword2"
                                     />
                                     <label
                                         htmlFor="togglePassword2"
-                                        className="absolute right-2 top-2/4 transform -translate-y-1/2 cursor-pointer text-gray-600"
+                                        className="absolute right-2 top-4 transform -translate-y-1/2 cursor-pointer text-gray-600"
                                     >
                                         {showPassword2 ? <Visibility /> : <VisibilityOff />}
                                     </label>
@@ -213,7 +290,7 @@ const Registration = () => {
                             </div>
 
                             {/* Continue button */}
-                            <button onClick={(e) => e.preventDefault()} className='w-full mt-10 px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-105 drop-shadow-lg'>
+                            <button onClick={handleRegistration} className='w-full mt-10 px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-105 drop-shadow-lg'>
                                 Continue
                             </button>
                         </div>
@@ -228,8 +305,25 @@ const Registration = () => {
                         <div className="mt-6 text-start">
                             <p className="text-gray-600 text-xs">Already have an Account? <Link to="/signIn"><span className="text-blue-500 cursor-pointer font-bold hover:underline">Sign in</span></Link></p>
                         </div>
+                        <div className="mt-1 text-start">
+                            <p className="text-gray-600 text-xs font-semibold">Buying for work? <span className="text-blue-500 cursor-pointer font-light hover:underline">Create a free business account</span></p>
+                        </div>
                     </div>
                 </form>
+            </div>
+            <div className='w-full bg-gradient-to-t from-white via-white to-zinc-200 flex flex-col gap-4 justify-center items-center py-10'>
+                <div className='flex items-center justify-center gap-8'>
+                    <p className='text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100'>
+                        Conditions of Use
+                    </p>
+                    <p className='text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100'>
+                        Privacy Policy
+                    </p>
+                    <p className='text-xs text-blue-600 hover:text-orange-600 hover:underline underline-offset-1 cursor-pointer duration-100'>
+                        Privacy Notice
+                    </p>
+                </div>
+                <p className='text-xs text-gray-600'>© 1996-2023, Amazon.com, Inc. or its affiliates</p>
             </div>
         </div >
     );

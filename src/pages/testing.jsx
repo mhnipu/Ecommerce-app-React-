@@ -1,22 +1,37 @@
-// Password input with visibility toggle
-<input
-    // ...other attributes
-    onChange={(e) => handlePasswordChange(e.target.value, e)} // Pass both value and event
-/>
-
-// Confirm password input with visibility toggle
-<input
-    // ...other attributes
-    onChange={(e) => handleConfirmPasswordChange(e)} // Pass only the event
-/>
-const handleConfirmPasswordChange = (e) => {
+const handleCombinedChange = (e) => {
     const value = e.target.value;
-    setConfirmPassword(value);
-    if (value !== password) {
-        setPasswordMismatch(true);
-        setErrorConfirmPassword('Passwords do not match');
-    } else {
-        setPasswordMismatch(false);
-        setErrorConfirmPassword(''); // Clear error message when passwords match
+    if (contactMethod === 'email') {
+        setEmail(value);
+        setErrorEmail('');
+    } else if (contactMethod === 'phone') {
+        if (!isNaN(value) && value.length <= 15) {
+            setPhoneNumber(value);
+            setShowErrorMessage(false);
+        } else {
+            setShowErrorMessage(true);
+        }
+    }
+};
+
+
+
+const phoneNumberValidation = (phoneNumber) => {
+    // Implement your phone number validation logic here
+    // For example, checking if the phone number adheres to a specific format or length
+    return /^\d{10,15}$/.test(phoneNumber); // Validates if the number is between 10 to 15 digits
+};
+
+const handleCombinedChange = (e) => {
+    const value = e.target.value;
+    if (contactMethod === 'email') {
+        setEmail(value);
+        setErrorEmail('');
+    } else if (contactMethod === 'phone') {
+        if (!isNaN(value) || value === '') {
+            setPhoneNumber(value);
+            setShowErrorMessage(false);
+        } else {
+            setShowErrorMessage(true);
+        }
     }
 };

@@ -28,28 +28,102 @@ const Registration = () => {
     const [Erroremail, setErrorEmail] = useState('');
     const [ErrorPassword, setErrorPassword] = useState('');
     const [ErrorConfirmPassword, setErrorConfirmPassword] = useState('');
+    // email Validation
+
+    const emailValidation = (email) => {
+        const lowerCaseEmail = String(email).toLowerCase(); // Convert email to lowercase
+        return lowerCaseEmail.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    }
+    const phoneNumberValidation = (phoneNumber) => {
+        // Implement your phone number validation logic here
+        return /^\d{10,15}$/.test(phoneNumber); // Validates if the number is between 10 to 15 digits
+    };
+
 
     // continue button state
     const handleRegistration = (e) => {
         e.preventDefault();
+
+        // Validate client name
         if (!clientName) {
             setErrorClientName('Enter your name');
+        } else {
+            setErrorClientName('');
         }
-        if (!email) {
-            setErrorEmail('Enter your Email or Phone Number');
+
+        // Validate email or phone number based on the selected contact method
+        if (contactMethod === 'email') {
+            if (!email) {
+                setErrorEmail('Enter your Email');
+            } else if (!emailValidation(email)) {
+                setErrorEmail('Please enter a valid email');
+            } else if (email !== email.toLowerCase()) {
+                setErrorEmail('Email should be in lowercase');
+            } else {
+                setErrorEmail('');
+            }
+        } else if (contactMethod === 'phone') {
+            if (!phoneNumber) {
+                setShowErrorMessage(true);
+            } else if (!phoneNumberValidation(phoneNumber)) {
+                setShowErrorMessage(true);
+            } else {
+                setShowErrorMessage(false);
+            }
         }
+
         if (!password) {
             setErrorPassword('Enter your Password');
+        } else {
+            if (password.length < 6) {
+                setErrorPassword('Password must be at least 6 characters');
+            } else {
+                setErrorPassword('');
+            }
         }
+
         if (!confirmPassword) {
             setErrorConfirmPassword('Please Re-Enter your Password');
+        } else {
+            setErrorConfirmPassword('');
         }
-    }
+
+        if (
+            clientName &&
+            ((contactMethod === 'email' && !Erroremail) ||
+                (contactMethod === 'phone' && !showErrorMessage)) &&
+            password &&
+            password.length >= 6 &&
+            confirmPassword &&
+            confirmPassword === password
+        ) {
+            // Process registration
+            console.log(clientName, contactMethod === 'email' ? email : phoneNumber, password, confirmPassword);
+            setClientName('');
+            setEmail('');
+            setPhoneNumber('');
+            setPassword('');
+            setConfirmPassword('');
+            setErrorConfirmPassword('');
+        }
+    };
+
 
     const handleCombinedChange = (e) => {
-        handleInputChange(e);
-        handleEmail_Phone(e);
+        const value = e.target.value;
+        if (contactMethod === 'email') {
+            setEmail(value);
+            setErrorEmail('');
+        } else if (contactMethod === 'phone') {
+            if (!isNaN(value) || value === '') {
+                setPhoneNumber(value);
+                setShowErrorMessage(false);
+            } else {
+                setShowErrorMessage(true);
+            }
+        }
     };
+
 
     // 
     // handle functions
@@ -58,10 +132,7 @@ const Registration = () => {
         setErrorClientName("")
     }
 
-    const handleEmail_Phone = (e) => {
-        setEmail(e.target.value)
-        setErrorEmail("")
-    }
+
 
     // Function to handle password input change
     const handlePasswordChange = (value, e) => {
@@ -136,7 +207,7 @@ const Registration = () => {
         <div className='w-full'>
             <div className='w-full bg-gray-100 pb-20'>
                 {/* Registration form */}
-                <form className="w-[370px] mx-auto flex flex-col items-center">
+                <form className="w-[370px] mx-auto flex flex-col items-center" onSubmit={handleRegistration}>
                     {/* Logo */}
                     <img className='w-40 Hover' src={darkLogo} alt="" />
 
@@ -149,7 +220,7 @@ const Registration = () => {
                             <div className='flex flex-col gap-2 py-1 pt-6'>
                                 {/* Name input */}
                                 <p className='font-semibold  text-gray-600'>Your name</p>
-                                <input onChange={handleName} className="w-full py-1 border border-zinc-300 shadow-inner rounded-md Hover px-2 text-base outline-none focus-within:border-app_yellow focus-within:shadow-appShadow duration-100" type="text-sm" placeholder='First and Last name' />
+                                <input onChange={handleName} className="w-full py-1 border border-zinc-300 shadow-inner rounded-md Hover px-2 text-base outline-none focus-within:border-app_yellow focus-within:shadow-appShadow duration-100" type="text-sm" placeholder='First and Last name' value={clientName} />
                                 {
                                     ErrorclientName && (
                                         <p className='text-red-500 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5'><span className='italic font-titleFont font-extrabold text-base'>!</span>{ErrorclientName}</p>
@@ -185,16 +256,14 @@ const Registration = () => {
                                     </label>
                                 </div>
                                 <input
-                                    className="w-full lowercase py-1 border border-zinc-300 shadow-inner rounded-md Hover px-2 text-base outline-none focus-within:border-app_yellow focus-within:shadow-appShadow duration-100"
+                                    className="w-full py-1 border border-zinc-300 shadow-inner rounded-md Hover px-2 text-base outline-none focus-within:border-app_yellow focus-within:shadow-appShadow duration-100"
                                     type={contactMethod === 'email' ? 'email' : 'tel'}
                                     pattern={contactMethod === 'phone' ? '[0-9]*' : undefined}
+                                    maxLength={contactMethod === 'phone' ? 15 : undefined}
                                     placeholder={contactMethod === 'email' ? 'Enter your email' : 'Enter your phone number'}
-                                    value={phoneNumber}
+                                    value={contactMethod === 'email' ? email : phoneNumber}
                                     onChange={handleCombinedChange}
                                 />
-                                {contactMethod === 'phone' && showErrorMessage && (
-                                    <p className="text-red-500 text-xs">Please enter only numbers for the phone number.</p>
-                                )}
                                 {contactMethod === 'email' && Erroremail && (
                                     <p className='text-red-500 text-xs font-semibold tracking-wide flex items-center gap-2 -mt-1.5'><span className='italic font-titleFont font-extrabold text-base'>!</span>{Erroremail}</p>
                                 )}
@@ -219,7 +288,7 @@ const Registration = () => {
                                         placement="right"
                                     >
                                         <input
-                                            className={`w-full lowercase py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100  Hover cursor-pointer ${passwordStrength === 'weak' ? 'border-red-500' : passwordStrength === 'medium' ? 'border-yellow-500' : 'border-green-500'}`}
+                                            className={`w-full  py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100  Hover cursor-pointer ${passwordStrength === 'weak' ? 'border-red-500' : passwordStrength === 'medium' ? 'border-yellow-500' : 'border-green-500'}`}
                                             placeholder='At least 6 characters'
                                             type={showPassword1 ? 'text' : 'password'}
                                             value={password}
@@ -261,7 +330,7 @@ const Registration = () => {
                                     {/* Confirm password Input */}
 
                                     <input
-                                        className={`w-full lowercase py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100 Hover cursor-pointer ${passwordMismatch ? 'border-red-500' : ''}`}
+                                        className={`w-full  py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100 Hover cursor-pointer ${passwordMismatch ? 'border-red-500' : ''}`}
                                         type={showPassword2 ? 'text' : 'password'}
                                         value={confirmPassword}
                                         onChange={(e) => handleConfirmPasswordChange(e)}
@@ -290,7 +359,7 @@ const Registration = () => {
                             </div>
 
                             {/* Continue button */}
-                            <button onClick={handleRegistration} className='w-full mt-10 px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-105 drop-shadow-lg'>
+                            <button type="submit" className='w-full mt-10 px-8 bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500 py-1.5 rounded-md shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-105 drop-shadow-lg'>
                                 Continue
                             </button>
                         </div>

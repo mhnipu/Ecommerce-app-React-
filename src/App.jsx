@@ -16,6 +16,7 @@ import Sign_in from './pages/Sign_in';
 import Cart from './pages/Cart';
 import Registration from './pages/Registration';
 import CheckOut from './pages/CheckOut';
+import ProductView from './pages/ProductView';
 
 const Layout = () => {
   return (
@@ -34,6 +35,7 @@ function App() {
       <Route path="/" element={<Layout />} >
         <Route index element={<Home />} loader={ProductsData}></Route>
         <Route path="/cart" element={<Cart />}></Route>
+        <Route path="/products" element={<ProductView />} loader={ProductsData}></Route>
       </Route >
       <Route path="/signIn" element={<Sign_in />}></Route>
       <Route path="/registration" element={<Registration />}></Route>

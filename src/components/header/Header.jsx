@@ -58,9 +58,9 @@ const Header = () => {
                 {/* searchBar  */}
                 <div className='h-10 rounded-md hidden lgl:flex flex-grow relative'>
 
-                    <span className='w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-500 text-sm font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md'>
+                    <span className='pl-2 w-14 h-full bg-gray-200 hover:bg-gray-300 border-2 cursor-pointer duration-500 text-sm font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md'>
                         <Menu><MenuHandler>
-                            <Button onClick={() => setShowAll(!showAll)} className='text-app_blue text-sm font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md'>All <span></span> <ArrowDropDownOutlinedIcon /></Button>
+                            <Button onClick={() => setShowAll(!showAll)} className='text-app_blue text-sm font-titleFont flex items-center justify-center rounded-tl-md rounded-bl-md'><span>All</span> <ArrowDropDownOutlinedIcon /></Button>
                         </MenuHandler>
                             <MenuList className="max-h-screen absolute w-56 h-80 top-10 left-0 overflow-y-scroll overflow-x-hidden bg-white drop-shadow-lg  text-black p-2 flex-col gap-1 z-50 items-start justify-start flex">
                                 <MenuItem>

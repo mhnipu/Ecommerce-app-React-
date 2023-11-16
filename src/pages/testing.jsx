@@ -1,37 +1,51 @@
-const handleCombinedChange = (e) => {
-    const value = e.target.value;
-    if (contactMethod === 'email') {
-        setEmail(value);
-        setErrorEmail('');
-    } else if (contactMethod === 'phone') {
-        if (!isNaN(value) && value.length <= 15) {
-            setPhoneNumber(value);
-            setShowErrorMessage(false);
-        } else {
-            setShowErrorMessage(true);
-        }
-    }
-};
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
 
+export default function AlertDialogSlide() {
+    const [open, setOpen] = React.useState(false);
 
-const phoneNumberValidation = (phoneNumber) => {
-    // Implement your phone number validation logic here
-    // For example, checking if the phone number adheres to a specific format or length
-    return /^\d{10,15}$/.test(phoneNumber); // Validates if the number is between 10 to 15 digits
-};
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-const handleCombinedChange = (e) => {
-    const value = e.target.value;
-    if (contactMethod === 'email') {
-        setEmail(value);
-        setErrorEmail('');
-    } else if (contactMethod === 'phone') {
-        if (!isNaN(value) || value === '') {
-            setPhoneNumber(value);
-            setShowErrorMessage(false);
-        } else {
-            setShowErrorMessage(true);
-        }
-    }
-};
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <React.Fragment>
+            <Button variant="outlined" onClick={handleClickOpen}>
+                Slide in alert dialog
+            </Button>
+            <Dialog
+                open={open}
+                TransitionComponent={Transition}
+                keepMounted
+                onClose={handleClose}
+                aria-describedby="alert-dialog-slide-description"
+            >
+                <DialogTitle>{"Use Google's location service?"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-slide-description">
+                        Let Google help apps determine location. This means sending anonymous
+                        location data to Google, even when no apps are running.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Disagree</Button>
+                    <Button onClick={handleClose}>Agree</Button>
+                </DialogActions>
+            </Dialog>
+        </React.Fragment>
+    );
+}

@@ -18,6 +18,14 @@ export const appSlice = createSlice({
                 state.products.push(action.payload)
             )
         },
+        productView: (state, action) => {
+            const item = state.products.find((item) => item.id === action.payload.id)
+            if (item) {
+                item.quantity += action.payload.quantity;
+            } else (
+                state.products.push(action.payload)
+            )
+        },
         incrementQuantity: (state, action) => {
             const item = state.products.find((item) => item.id === action.payload)
             item.quantity++
@@ -38,5 +46,5 @@ export const appSlice = createSlice({
         }
     }
 })
-export const { addToCart, deleteItem, resetCart, decrementQuantity, incrementQuantity } = appSlice.actions;
+export const { addToCart, deleteItem, resetCart, decrementQuantity, incrementQuantity, productView } = appSlice.actions;
 export default appSlice.reducer;

@@ -90,7 +90,7 @@ const Registration = () => {
 
         if (
             clientName &&
-            ((contactMethod === 'email' && !Erroremail) ||
+            ((contactMethod === 'email' && !Erroremail && email.toLowerCase() === email) ||
                 (contactMethod === 'phone' && !showErrorMessage)) &&
             password &&
             password.length >= 6 &&
@@ -98,7 +98,7 @@ const Registration = () => {
             confirmPassword === password
         ) {
             // Process registration
-            console.log(clientName, contactMethod === 'email' ? email : phoneNumber, password, confirmPassword);
+            console.log(clientName, contactMethod === 'email' ? email.toLowerCase() : phoneNumber, password, confirmPassword);
             setClientName('');
             setEmail('');
             setPhoneNumber('');
@@ -106,6 +106,7 @@ const Registration = () => {
             setConfirmPassword('');
             setErrorConfirmPassword('');
         }
+
     };
 
 

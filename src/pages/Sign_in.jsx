@@ -26,6 +26,8 @@ const Sign_in = () => {
     };
 
     const handleSignIn = (e) => {
+        e.preventDefault();
+
         if (contactMethod === 'email') {
             if (!email) {
                 setErrorEmail('Enter your Email');
@@ -51,13 +53,37 @@ const Sign_in = () => {
         } else {
             setErrorPassword('');
         }
-        if (((contactMethod === 'email' && !Erroremail) ||
-            (contactMethod === 'phone' && !showErrorMessage)) && password) {
-            console.log( contactMethod === 'email' ? email : phoneNumber, password);
-            setEmail("");
-            setPassword("");
-            setPhoneNumber("");
+        if (
+            (contactMethod === 'email' && !Erroremail && email.toLowerCase() === email) ||
+            (contactMethod === 'phone' && !showErrorMessage)
+        ) {
+            console.log(contactMethod === 'email' ? email.toLowerCase() : phoneNumber, password);
+            setEmail('');
+            setPassword('');
+            setPhoneNumber('');
+        }
 
+        if (contactMethod === 'email') {
+            // Convert email to lowercase before validation
+            const lowercaseEmail = email.toLowerCase();
+
+            if (!email) {
+                setErrorEmail('Enter your Email');
+            } else if (!emailValidation(email)) {
+                setErrorEmail('Please enter a valid email');
+            } else if (email !== lowercaseEmail) {
+                setErrorEmail('Email should be in lowercase');
+            } else {
+                setErrorEmail('');
+            }
+        } else if (contactMethod === 'phone') {
+            if (!phoneNumber) {
+                setShowErrorMessage(true);
+            } else if (!phoneNumberValidation(phoneNumber)) {
+                setShowErrorMessage(true);
+            } else {
+                setShowErrorMessage(false);
+            }
         }
     }
 

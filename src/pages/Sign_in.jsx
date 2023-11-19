@@ -179,9 +179,11 @@ const Sign_in = () => {
                                 </label>
                                 <div className="relative">
                                     {/* Password Input */}
+
                                     <input
-                                        className={`w-full  py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100  Hover cursor-pointer`}
-                                        placeholder=''
+                                        className={`w-full py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100 hover cursor-pointer Hover`}
+                                        placeholder='enter your password'
+                                        style={{ fontSize: '16px' }} // Adjust the font size here
                                         type={showPassword ? 'text' : 'password'}
                                         value={password}
                                         onChange={(e) => handlePasswordChange(e.target.value, e)}

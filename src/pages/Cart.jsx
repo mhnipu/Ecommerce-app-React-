@@ -7,6 +7,7 @@ import { Alert, Tooltip } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { decrementQuantity, deleteItem, incrementQuantity, resetCart } from '../redux/appSlice';
+import { setViewedProduct } from '../redux/appSlice';
 import { emptyCart } from '../assets/index'
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
@@ -22,9 +23,6 @@ const Cart = () => {
             return setTotalPrice(Total.toFixed(2))
         })
     }, [products])
-
-
-
     return (
         <div className="w-full bg-gray-200 p-4">
             {/* Check if there are products in the cart */}

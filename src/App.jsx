@@ -35,7 +35,7 @@ function App() {
       <Route path="/" element={<Layout />} >
         <Route index element={<Home />} loader={ProductsData}></Route>
         <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/products" element={<ProductView />} loader={ProductsData}></Route>
+        <Route path="/products/:id" element={<ProductView />} loader={ProductsData}></Route>
       </Route >
       <Route path="/signIn" element={<Sign_in />}></Route>
       <Route path="/registration" element={<Registration />}></Route>

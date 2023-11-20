@@ -129,7 +129,6 @@ const Sign_in = () => {
                     {/* Form Container */}
                     <div className='w-full border border-zinc-200 rounded-lg drop-shadow-lg p-8 bg-white '>
                         <h2 className='font-titleFont text-2xl  font-bold mb-4 text-center'>Sign in</h2>
-
                         {/* Contact Method Selection */}
                         <div className='flex flex-col gap-3'>
                             {/* Email field */}

@@ -7,7 +7,7 @@ import { Link, useLoaderData } from 'react-router-dom'
 import Tooltip from '@mui/material/Tooltip'
 import { useDispatch } from 'react-redux'
 import { motion } from 'framer-motion'
-import { addToCart, productView } from '../../redux/appSlice';
+import { addToCart, setViewedProduct } from '../../redux/appSlice';
 
 
 
@@ -15,19 +15,30 @@ const Products = () => {
     const dispatch = useDispatch()
     const data = useLoaderData()
     const ProductData = data.data;
+
+    const handleProductView = (item) => {
+        dispatch(
+            setViewedProduct({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                price: item.price,
+                category: item.category,
+                image: item.image,
+                quantity: 1,
+            })
+        );
+        // Redirect to product view page based on the ID
+    };
     return (
         <div className='max-w-screen-5xl max-w-[95%] mx-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10 mb-4 backDrop'>
 
             {
                 ProductData.map((item) => (
-
-                    <Tooltip top title={item.category} placement="top" className='bg-white h-auto border-[1px] border-gray-200 py-8 z-30 hover:border-transparent shadow-none hover:shadow-testShadow duration-500 relative flex flex-col gap-4 rounded-xl cursor-pointer' arrow>
+                    <Tooltip key={item.id} top title={item.category} placement="top" className='bg-white h-auto border-[1px] border-gray-200 py-8 z-30 hover:border-transparent shadow-none hover:shadow-testShadow duration-500 relative flex flex-col gap-4 rounded-xl cursor-pointer' arrow>
                         <motion.div initial={{ y: 70, opacity: 0 }}
                             animate={{ y: 0, opacity: 1 }}
                             transition={{ delay: 0.5, duration: 0.5 }} key={item.id} className='bg-white h-auto border-[1px] border-gray-200 py-8 z-30 hover:border-transparent shadow-none hover:shadow-testShadow duration-500 relative flex flex-col gap-4 rounded-xl cursor-pointer pb-4 backDrop'>
-
-
-
                             <div className='w-full h-auto flex items-center justify-center px-4 relative group imgHover'>
                                 <img className="w-52 h-64 object-contain  imgHover" src={item.image} alt="" />
                                 <ul className='w-full h-36 absolute bottom-[-170px] flex flex-col items-end justify-center gap-2 font-titleFont px-4 border-1 border-r group-hover:bottom-0 duration-700'>
@@ -42,23 +53,13 @@ const Products = () => {
                                         </span>
                                     </li>
                                     <li className="productLi Hover bottom-10">
-                                        <span >
-                                            <Tooltip top title="Product View" placement="left" arrow>{""}<Link to='/products'>
-                                                <RemoveRedEyeRounded />
-                                                <button onClick={() => {
-                                                    dispatch(
-                                                        productView({
-                                                            id: item.id,
-                                                            title: item.title,
-                                                            description: item.description,
-                                                            price: item.price,
-                                                            category: item.category,
-                                                            image: item.image,
-                                                            quantity: 1,
-                                                        })
-                                                    );
-                                                }}></button>
-                                            </Link></Tooltip>
+                                        <span>
+                                            <Tooltip top title="Product View" placement="left" arrow>
+                                                {/* Use a Link or navigate to the product view */}
+                                                <Link to={`/products/${item.id}`} onClick={() => handleProductView(item)}>
+                                                    <RemoveRedEyeRounded />
+                                                </Link>
+                                            </Tooltip>
                                         </span>
                                     </li>
                                     <li className="productLi Hover bottom-1">

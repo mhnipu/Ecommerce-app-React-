@@ -1,68 +1,56 @@
 /* eslint-disable no-unused-vars */
 import { Tooltip } from '@mui/material';
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useLoaderData } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { addToCart } from '../redux/appSlice';
 
 const ProductView = () => {
-    const data = useLoaderData()
-    const products = useSelector((state) => state.app.products);
-
+    const dispatch = useDispatch()
+    const viewedProduct = useSelector((state) => state.app.viewedProduct);
+    const [amount, setAmount] = useState(1);
+    if (!viewedProduct) {
+        return <div>No product found!</div>;
+    }
     return (
-        <div className="w-full bg-gray-200 p-4">
-            {products.map((item) => (
-                // Individual Product Item
-                <div key={item.id} className="w-full bg-gray-100 p-4 flex rounded-lg items-center gap-6 border-b-[1px] border-b-gray-300 m-1">
-                    {/* Product Image */}
-                    <div className="w-full flex items-center justify-between gap-6 ">
-                        <div className="w-2/5 bg-white rounded-lg py-5 drop-shadow-lg ">
-                            <img className='w-full h-44 object-contain imgHover' src={item.image} alt="" />
-                        </div>
-                        {/* Product Details */}
-                        <div className="w-3/5 mx-auto">
-                            {/* Product Title */}
-                            <Tooltip top title={item.title} placement="left" className='font-titleFont pt-2 cursor-pointer font-semibold text-lg' arrow>
-                                <h2 className="text-2xl font-bold">
-                                    {item.title.length <= 60 ? (
-                                        item.title
-                                    ) : (
-                                        <>
-                                            {item.title.substring(0, 60)}...
-                                            <span className="text-app_yellow ml-1">•</span>
-                                        </>
-                                    )}
-                                </h2>
-                            </Tooltip>
-
-                            {/* Product Description */}
-                            <Tooltip top title={item.description} placement="bottom" className='font-titleFont tracking-wide text-sm text-gray-600 pt-2 cursor-pointer' arrow>
-                                <p>
-                                    {item.description.length <= 200 ? (
-                                        item.description
-                                    ) : (
-                                        <>
-                                            {item.description.substring(0, 200)}...
-                                            <span className="text-app_yellow ml-1">•</span>
-                                        </>
-                                    )}
-                                </p>
-                            </Tooltip>
-
-                            {/* Product Price */}
-                            <p className='text-base pt-2 text-gray-500 right-2'>Unit Price <span className="font-semibold text-orange-400">${item.price}</span></p>
-
-
-                        </div>
-
-                        {/* Total Price for Item */}
-                        <div className='w-50'>
-                            <div className='bg-[#f0f2f2] flex justify-center items-center gap-1 w-auto py-2 left-4 p-4 text-center drop-shadow-lg rounded-md'>
-                                <p className='text-lg font-titleFont font-semibold'>${(item.price * item.quantity).toFixed(2)}</p>
-                            </div>
-                        </div>
+        <div className='container mx-auto px-4 py-8'>
+            <div className='flex flex-col lg:flex-row items-stretch w-full justify-between gap-6'>
+                {/* Image */}
+                <div className="w-full lg:w-2/5 bg-white rounded-lg h-auto drop-shadow-lg flex justify-center items-center py-16">
+                    <img className='w-full h-60 object-contain imgHover' src={viewedProduct.image} alt="" />
+                </div>
+                {/* About */}
+                <div className='lg:w-2/5 flex flex-col gap-4 w-full mx-auto ml-10 '>
+                    <div className="h-full">
+                        <span className='text-app_yellow font-semibold'>Special Sneaker</span>
+                        <h1 className='text-4xl font-bold'>{viewedProduct.title}</h1>
+                    </div>
+                    <p className='text-gray-700 flex-1'>{viewedProduct.description}</p>
+                    <h6 className='text-3xl font-semibold'>${viewedProduct.price}</h6>
+                    <div className='flex items-center gap-12'>
+                        {/* <div className='flex items-center'>
+                            <button className='bg-gray-200 py-2 px-5 rounded-lg text-violet-800 text-3xl' onClick={() => setAmount((prev) => Math.max(prev - 1, 1))}>-</button>
+                            <span className='py-4 px-6 rounded-lg bg-gray-200'>{amount}</span>
+                            <button className='bg-gray-200 py-2 px-4 rounded-lg text-violet-800 text-3xl' onClick={() => setAmount((prev) => prev + 1)}>+</button>
+                        </div> */}
+                        <Link to='/cart'>
+                            <button onClick={() => {
+                                dispatch(
+                                    addToCart({
+                                        id: viewedProduct.id,
+                                        title: viewedProduct.title,
+                                        description: viewedProduct.description,
+                                        price: viewedProduct.price,
+                                        category: viewedProduct.category,
+                                        image: viewedProduct.image,
+                                        quantity: 1,
+                                    }),
+                                );
+                            }} className="w-full font-titleFont text-base bg-gradient-to-tr from-yellow-400 to-yellow-300 border hover:from-yellow-300 hover:to-yellow-400 border-yellow-500 hover:border-yellow-600 active:bg-gradient-to-bl active:from-yellow-400 active:to-yellow-500 duration-500  shadow-md hover:shadow-lg focus:outline-none transform transition-transform hover:scale-95 drop-shadow-lg font-semibold py-3 px-12 rounded-xl" >Add to Cart</button>
+                        </Link>
                     </div>
                 </div>
-            ))}
+            </div>
         </div>
     );
 };

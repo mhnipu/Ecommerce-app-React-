@@ -22,7 +22,7 @@ const ProductView = () => {
                 {/* About */}
                 <div className='lg:w-2/5 flex flex-col gap-4 w-full mx-auto ml-10 '>
                     <div className="h-full">
-                        <span className='text-app_yellow font-semibold'>Special Sneaker</span>
+                        <span className='text-app_yellow font-semibold'>Special {viewedProduct.category}</span>
                         <h1 className='text-4xl font-bold'>{viewedProduct.title}</h1>
                     </div>
                     <p className='text-gray-700 flex-1'>{viewedProduct.description}</p>

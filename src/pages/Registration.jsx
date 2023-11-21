@@ -43,6 +43,7 @@ const Registration = () => {
     // continue button state
     const handleRegistration = (e) => {
         e.preventDefault();
+        setShowErrorMessage(!phoneNumber ? true : !phoneNumberValidation(phoneNumber));
 
         // Validate client name
         if (!clientName) {
@@ -52,15 +53,19 @@ const Registration = () => {
         }
 
         // Validate email or phone number based on the selected contact method
+        // Email validation logic
         if (contactMethod === 'email') {
+            const lowercaseEmail = email.toLowerCase();
+
             if (!email) {
                 setErrorEmail('Enter your Email');
             } else if (!emailValidation(email)) {
                 setErrorEmail('Please enter a valid email');
-            } else if (email !== email.toLowerCase()) {
+            } else if (email !== lowercaseEmail) {
                 setErrorEmail('Email should be in lowercase');
             } else {
                 setErrorEmail('');
+                // Handle successful email validation
             }
         } else if (contactMethod === 'phone') {
             if (!phoneNumber) {
@@ -69,18 +74,12 @@ const Registration = () => {
                 setShowErrorMessage(true);
             } else {
                 setShowErrorMessage(false);
+                // Handle successful phone number validation
             }
         }
 
-        if (!password) {
-            setErrorPassword('Enter your Password');
-        } else {
-            if (password.length < 6) {
-                setErrorPassword('Password must be at least 6 characters');
-            } else {
-                setErrorPassword('');
-            }
-        }
+        setErrorPassword(!password ? 'Enter your Password' : password.length >= 6 ? '' : 'Password must be at least 6 characters');
+        setErrorConfirmPassword(!confirmPassword ? 'Re-enter your Password' : confirmPassword === password ? '' : 'Passwords do not match');
 
         if (!confirmPassword) {
             setErrorConfirmPassword('Please Re-Enter your Password');
@@ -88,27 +87,25 @@ const Registration = () => {
             setErrorConfirmPassword('');
         }
 
-        if (
-            clientName &&
-            ((contactMethod === 'email' && !Erroremail && email.toLowerCase() === email) ||
-                (contactMethod === 'phone' && !showErrorMessage)) &&
-            password &&
-            password.length >= 6 &&
-            confirmPassword &&
-            confirmPassword === password
-        ) {
-            // Process registration
+        // Process registration if all validations pass
+        if (clientName && ((contactMethod === 'email' && !Erroremail) || (contactMethod === 'phone' && !showErrorMessage)) && !ErrorPassword && !ErrorConfirmPassword) {
             console.log(clientName, contactMethod === 'email' ? email.toLowerCase() : phoneNumber, password, confirmPassword);
-            setClientName('');
-            setEmail('');
-            setPhoneNumber('');
-            setPassword('');
-            setConfirmPassword('');
-            setErrorConfirmPassword('');
+            resetFormFields();
         }
-
+    };
+    const resetFormFields = () => {
+        setClientName('');
+        setEmail('');
+        setPhoneNumber('');
+        setPassword('');
+        setConfirmPassword('');
+        setErrorConfirmPassword('');
     };
 
+    // Function to calculate password strength
+    const calculatePasswordStrength = (value) => {
+        return value.length >= 6 ? 'strong' : value.length >= 4 ? 'medium' : 'weak';
+    };
 
     const handleCombinedChange = (e) => {
         const value = e.target.value;
@@ -190,19 +187,6 @@ const Registration = () => {
             setShowPassword2(!showPassword2);
         }
     };
-
-
-    // Function to calculate password strength
-    const calculatePasswordStrength = (value) => {
-        const strength = value.length >= 6 ? 'strong' : value.length >= 4 ? 'medium' : 'weak';
-        return strength;
-    };
-
-
-
-
-
-
 
     return (
         <div className='w-full'>
@@ -289,13 +273,12 @@ const Registration = () => {
                                         placement="right"
                                     >
                                         <input
-                                            className={`w-full  py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100  Hover cursor-pointer ${passwordStrength === 'weak' ? 'border-red-500' : passwordStrength === 'medium' ? 'border-yellow-500' : 'border-green-500'}`}
+                                            className={`w-full py-1 border border-zinc-300 shadow-inner rounded-md px-2 text-base outline-none focus-within:shadow-appShadow duration-100 Hover cursor-pointer ${passwordStrength === 'weak' ? 'border-red-500' : passwordStrength === 'medium' ? 'border-yellow-500' : 'border-green-500'}`}
                                             placeholder='At least 6 characters'
                                             type={showPassword1 ? 'text' : 'password'}
                                             value={password}
                                             onChange={(e) => handlePasswordChange(e.target.value, e)}
                                         />
-
                                         <input
                                             type="checkbox"
                                             className="absolute right-2 top-4 transform -translate-y-1/2 cursor-pointer opacity-0 w-6 h-6 text-gray-600"
@@ -310,7 +293,13 @@ const Registration = () => {
                                             {showPassword1 ? <Visibility /> : <VisibilityOff />}
                                         </label>
                                     </Tooltip>
-                                    <p className="text-xs text-gray-500 p-1"><span className='italic text-blue-500 font-titleFont font-extrabold text-base'>i  </span> Password must be minimum 6 characters</p>
+                                    <p className="text-xs text-gray-500 p-1">
+                                        <span className='italic text-blue-500 font-titleFont font-extrabold text-base'>i</span>
+                                        {passwordStrength === 'strong' && ' Strong Password'}
+                                        {passwordStrength === 'medium' && ' Medium Password'}
+                                        {passwordStrength === 'weak' && ' Weak Password'}
+                                        {passwordStrength === '' && ' Password must be minimum 6 characters'}
+                                    </p>
 
                                     {
                                         ErrorPassword && (

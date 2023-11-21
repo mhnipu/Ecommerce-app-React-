@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line no-unused-vars
 
-import { CheckCircle, ShoppingCart } from '@mui/icons-material';
+import { CheckCircle, RemoveRedEyeRounded, ShoppingCart } from '@mui/icons-material';
 import { Alert, Tooltip } from '@mui/material';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,6 +12,20 @@ import { emptyCart } from '../assets/index'
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion'
 const Cart = () => {
+    const handleProductView = (item) => {
+        dispatch(
+            setViewedProduct({
+                id: item.id,
+                title: item.title,
+                description: item.description,
+                price: item.price,
+                category: item.category,
+                image: item.image,
+                quantity: 1,
+            })
+        );
+        // Redirect to product view page based on the ID
+    };
 
     const dispatch = useDispatch()
     const products = useSelector((state) => state.app.products);
@@ -85,7 +99,7 @@ const Cart = () => {
                                             <p className='text-base pt-2 text-gray-500 right-2'>Unit Price <span className="font-semibold text-orange-400">${item.price}</span></p>
 
                                             {/* Quantity Controls */}
-                                            <div className="flex items-center justify-center bg-[#f0f2f2] w-40 py-2 rounded-md shadow-lg gap-1">
+                                            <div className="flex items-center justify-center bg-[#f0f2f2] w-44 py-2 rounded-md shadow-lg gap-1">
                                                 <span className="text-gray-500 right-3">Qty : </span>
                                                 <button onClick={() => dispatch(decrementQuantity(item.id))} className="bg-gray-200 px-3 rounded-md hover:bg-app_yellow">-</button>
                                                 <span className='px-2'>{item.quantity}</span>
@@ -94,6 +108,15 @@ const Cart = () => {
 
                                             {/* Delete Item Button */}
                                             <button onClick={() => dispatch(deleteItem(item.id))} className='bg-gradient-to-r from-red-600 to-red-400 w-32 py-1 rounded-lg text-white mt-2 transform hover:scale-105 transition-transform duration-500'>Delete Item</button>
+                                            <button onClick={() => dispatch(deleteItem(item.id))} className='ml-2 bg-gradient-to-r from-gray-500 to-gray-400 w-10 py-1 rounded-lg text-white mt-2 transform hover:scale-105 transition-transform duration-500'><span >
+                                                <Tooltip top title="Product View" placement="left" arrow>
+                                                    {/* Use a Link or navigate to the product view */}
+                                                    <Link to={`/products/${item.id}`} onClick={() => handleProductView(item)}>
+                                                        <RemoveRedEyeRounded />
+                                                    </Link>
+                                                </Tooltip>
+                                            </span></button>
+
                                         </div>
 
                                         {/* Total Price for Item */}

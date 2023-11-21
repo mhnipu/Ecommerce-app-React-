@@ -28,15 +28,19 @@ const Sign_in = () => {
     const handleSignIn = (e) => {
         e.preventDefault();
 
+        // Email validation logic
         if (contactMethod === 'email') {
+            const lowercaseEmail = email.toLowerCase();
+
             if (!email) {
                 setErrorEmail('Enter your Email');
             } else if (!emailValidation(email)) {
                 setErrorEmail('Please enter a valid email');
-            } else if (email !== email.toLowerCase()) {
+            } else if (email !== lowercaseEmail) {
                 setErrorEmail('Email should be in lowercase');
             } else {
                 setErrorEmail('');
+                // Handle successful email validation
             }
         } else if (contactMethod === 'phone') {
             if (!phoneNumber) {
@@ -45,22 +49,26 @@ const Sign_in = () => {
                 setShowErrorMessage(true);
             } else {
                 setShowErrorMessage(false);
+                // Handle successful phone number validation
             }
         }
 
+
+        // Password validation
         if (!password) {
             setErrorPassword('Enter your Password');
         } else {
             setErrorPassword('');
         }
+
+        // Submission based on validation
         if (
-            (contactMethod === 'email' && !Erroremail && email.toLowerCase() === email) ||
-            (contactMethod === 'phone' && !showErrorMessage)
+            (contactMethod === 'email' && !Erroremail && email.toLowerCase() === email && password) ||
+            (contactMethod === 'phone' && !showErrorMessage && password)
         ) {
-            console.log(contactMethod === 'email' ? email.toLowerCase() : phoneNumber, password);
-            setEmail('');
-            setPassword('');
-            setPhoneNumber('');
+            // Perform form submission action (e.g., API call)
+            performFormSubmission();
+            resetFormFields();
         }
 
         if (contactMethod === 'email') {
@@ -86,6 +94,16 @@ const Sign_in = () => {
             }
         }
     }
+    const performFormSubmission = () => {
+        // Logic for form submission (e.g., API call)
+        console.log('Form submitted:', contactMethod === 'email' ? email.toLowerCase() : phoneNumber, password);
+    };
+
+    const resetFormFields = () => {
+        setEmail('');
+        setPassword('');
+        setPhoneNumber('');
+    };
 
     const handlePasswordChange = (value, e) => {
         setPassword(e.target.value);

@@ -309,7 +309,6 @@ const Registration = () => {
 
                                 </div>
                             </div>
-
                             {/* Confirm password input with visibility toggle */}
                             <div className='flex flex-col gap-2 pt-6 relative'>
                                 <label className='text-gray-500'>
